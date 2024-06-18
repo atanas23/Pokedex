@@ -14,6 +14,17 @@ data class Pokemon(
     val sprites: Sprites
 )
 
+data class Generation(
+    val id: Int,
+    val name: String,
+    val pokemon_species: List<PokemonSpecies>
+)
+
+data class PokemonSpecies(
+    val name: String,
+    val url: String
+)
+
 data class Sprites(
     val front_default: String
 )
@@ -29,8 +40,11 @@ data class Type(
 )
 
 interface PokemonApi {
-    @GET("pokemon/{numb}")
-    suspend fun getPokemonByNumb(@Path("numb") numb: Int): Pokemon
+    @GET("generation/{generation}")
+    suspend fun getPokemonByGen(@Path("generation") numb: Int): Generation
+
+    @GET("pokemon/{name}")
+    suspend fun getPokemonDetails(@Path("name") name: String): Pokemon
 }
 
 object RetrofitInstance {

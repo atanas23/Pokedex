@@ -53,13 +53,13 @@ class MainActivity : ComponentActivity() {
                     pokemons = pokemonDataList,
                     errorMessage = errorMessage,
                     onFetchPokemon = {
-                        viewModel.getPokemon(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9))
+                        viewModel.getPokemon(1)
                     }
                 )
             }
         }
 
-        viewModel.getPokemon(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9))
+        viewModel.getPokemon(1)
     }
 }
 
