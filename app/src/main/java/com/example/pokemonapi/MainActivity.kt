@@ -2,12 +2,13 @@ package com.example.pokemonapi
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -63,13 +70,40 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @SuppressLint("InvalidColorHexValue")
 @Composable
 fun PokemonItem(pokemon: Pokemon) {
-    val backgroundColor = when (pokemon.types.firstOrNull()?.type?.name) {
+    val backgroundColor = getBackgroundColor(pokemon.types.firstOrNull()?.type?.name)
+
+    ElevatedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.elevatedCardColors(containerColor = backgroundColor)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+                .padding(4.dp)
+                .background(color = backgroundColor, shape = MaterialTheme.shapes.medium)
+                .padding(4.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            PokemonID(pokemon.id)
+            PokemonDetails(pokemon)
+            Spacer(modifier = Modifier.weight(1f))
+            PokemonImage(pokemon.sprites.front_default)
+        }
+    }
+}
+
+@Composable
+fun getBackgroundColor(typeName: String?): Color {
+    return when (typeName) {
         "normal" -> Color(0xFFA8A878)
-        "poison" -> Color(0xFFFA040A0)
+        "poison" -> Color(0xFFA040A0)
         "psychic" -> Color(0xFFF85888)
         "grass" -> Color(0xFF78C850)
         "ground" -> Color(0xFFE0C068)
@@ -88,62 +122,101 @@ fun PokemonItem(pokemon: Pokemon) {
         "fairy" -> Color(0xFFEE99AC)
         else -> Color(0xFFD3D3D3)
     }
-    Row(
+}
+
+@Composable
+fun PokemonID(id: Int) {
+    Text(
+        text = "#${id.toString().padStart(3, '0')}",
         modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min)
-            .padding(4.dp)
-            .background(color = backgroundColor, shape = MaterialTheme.shapes.medium)
-            .padding(4.dp),
-        verticalAlignment = Alignment.Top
+            .wrapContentHeight(Alignment.Top)
+            .width(50.dp)
+    )
+}
+
+@Composable
+fun PokemonDetails(pokemon: Pokemon) {
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(start = 16.dp),
+        horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "#${pokemon.id.toString().padStart(3, '0')}",
-            modifier = Modifier
-                .wrapContentHeight(Alignment.Top)
-                .width(50.dp)
+            text = pokemon.name.replaceFirstChar { it.uppercase() },
+            style = MaterialTheme.typography.titleLarge
         )
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .padding(start = 16.dp),
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text(
-                text = pokemon.name.replaceFirstChar { it.uppercase() },
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                pokemon.types.forEach { type ->
-                    Box(
-                        modifier = Modifier
-                            .padding(end = 4.dp)
-                            .border(1.dp, Color.DarkGray, shape = MaterialTheme.shapes.small)
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = type.type.name.uppercase(),
-                        )
-                    }
-                }
-            }
-        }
-
-        GlideImage(
-            model = pokemon.sprites.front_default,
-            contentDescription = "Pokemon Image",
-            modifier = Modifier
-                .size(120.dp)
-                .padding(2.dp),
-            contentScale = ContentScale.Crop
-        )
+        Spacer(modifier = Modifier.weight(1f))
+        TypeRow(pokemon.types)
     }
 }
+
+fun getDrawableResource(typeName: String): Int {
+    return when (typeName) {
+        "normal" -> R.drawable.normal
+        "poison" -> R.drawable.poison
+        "psychic" -> R.drawable.psychic
+        "grass" -> R.drawable.grass
+        "ground" -> R.drawable.ground
+        "ice" -> R.drawable.ice
+        "fire" -> R.drawable.fire
+        "rock" -> R.drawable.rock
+        "dragon" -> R.drawable.dragon
+        "water" -> R.drawable.water
+        "bug" -> R.drawable.bug
+        "dark" -> R.drawable.dark
+        "fighting" -> R.drawable.fighting
+        "ghost" -> R.drawable.ghost
+        "steel" -> R.drawable.steel
+        "flying" -> R.drawable.flying
+        "electric" -> R.drawable.electric
+        "fairy" -> R.drawable.fairy
+        else -> R.drawable.unknown 
+    }
+}
+
+@Composable
+fun TypeRow(types: List<PokemonType>) {
+    Row(
+        horizontalArrangement = Arrangement.Center
+    ) {
+        types.forEachIndexed { index, type ->
+            if (index > 0){
+                Spacer(modifier = Modifier.padding(horizontal = 4.dp))
+            }
+            val pokemonType = type.type.name.uppercase()
+            val drawableResId = getDrawableResource(type.type.name)
+            AssistChip(
+                onClick = { Log.d("assist chip", "test")},
+                label = { Text(text = type.type.name.uppercase()) },
+                leadingIcon = {
+                    Image(
+                        painter = painterResource(id = drawableResId),
+                        contentDescription = pokemonType,
+                        Modifier.size(AssistChipDefaults.IconSize)
+                    )
+                },
+                colors = AssistChipDefaults.assistChipColors(
+                    containerColor = Color.White
+                )
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun PokemonImage(imageUrl: String) {
+    GlideImage(
+        model = imageUrl,
+        contentDescription = "Pokemon Image",
+        modifier = Modifier
+            .size(120.dp)
+            .padding(2.dp),
+        contentScale = ContentScale.Crop
+    )
+}
+
 
 @Composable
 fun PokemonScreen(
