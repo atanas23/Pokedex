@@ -1,43 +1,14 @@
 package com.example.pokemonapi
 
+import com.example.pokemonapi.datamodels.Generation
+import com.example.pokemonapi.datamodels.Pokemon
+import com.example.pokemonapi.datamodels.PokemonAbility
+import com.example.pokemonapi.datamodels.PokemonStat
+import com.example.pokemonapi.datamodels.PokemonType
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-
-data class Pokemon(
-    val id: Int,
-    val name: String,
-    val height: Int,
-    val weight: Int,
-    val types: List<PokemonType>,
-    val sprites: Sprites
-)
-
-data class Generation(
-    val id: Int,
-    val name: String,
-    val pokemon_species: List<PokemonSpecies>
-)
-
-data class PokemonSpecies(
-    val name: String,
-    val url: String
-)
-
-data class Sprites(
-    val front_default: String
-)
-
-data class PokemonType(
-    val slot: Int,
-    val type: Type
-)
-
-data class Type(
-    val name: String,
-    val url: String
-)
 
 interface PokemonApi {
     @GET("generation/{generation}")
