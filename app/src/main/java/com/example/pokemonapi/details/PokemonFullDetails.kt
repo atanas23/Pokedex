@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +28,6 @@ fun PokemonFullDetails(pokemon: Pokemon) {
 
     Column(
         modifier = Modifier
-            .fillMaxHeight()
             .padding(start = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -36,23 +36,39 @@ fun PokemonFullDetails(pokemon: Pokemon) {
             style = MaterialTheme.typography.headlineMedium
         )
         Row(
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(vertical = 16.dp)
         ) {
-            AssistChip(
-                onClick = { /*TODO*/ },
-                label = { Text(text = "$pokemonHeight cm") },
-                colors = AssistChipDefaults.assistChipColors(
-                    containerColor = Color.White
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AssistChip(
+                    onClick = { /*TODO*/ },
+                    label = { Text(text = "$pokemonHeight cm") },
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = Color.White
+                    )
                 )
-            )
-            Spacer(modifier = Modifier.padding(horizontal = 4.dp))
-            AssistChip(
-                onClick = { /*TODO*/ },
-                label = { Text(text = "$pokemonWeight kg") },
-                colors = AssistChipDefaults.assistChipColors(
-                    containerColor = Color.White
+                Text(
+                    text = "Height",
+                    style = MaterialTheme.typography.bodySmall
                 )
-            )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                AssistChip(
+                    onClick = { /*TODO*/ },
+                    label = { Text(text = "$pokemonWeight kg") },
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = Color.White
+                    )
+                )
+                Text(
+                    text = "Weight",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
         TypeRow(pokemon.types)
     }

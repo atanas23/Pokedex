@@ -16,6 +16,11 @@ coilCompose = "2.6.0"
 runtimeLivedata = "1.6.7"
 compose = "1.0.0-beta01"
 navigationCompose = "2.8.0-beta03"
+composeM3 = "2.0.0-alpha.21"
+vico = "1.2.2"
+composeVersion = "2.0.0-alpha.21"
+core = "2.0.0-alpha.21"
+uiViewbinding = "1.6.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +45,11 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "compose" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+compose-m3 = { group = "com.patrykandpatrick.vico", name = "compose-m3", version.ref = "composeM3" }
+vico = { group = "com.patrykandpatrick.vico", name = "vico", version.ref = "vico" }
+vico-compose = { group = "com.patrykandpatrick.vico", name = "compose", version.ref = "composeVersion" }
+core = { group = "com.patrykandpatrick.vico", name = "core", version.ref = "core" }
+androidx-ui-viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding", version.ref = "uiViewbinding" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
