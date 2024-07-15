@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.pokemonapi.common.PokemonImage
 import com.example.pokemonapi.common.getBackgroundColor
@@ -44,9 +45,11 @@ fun PokemonDetailedItem(pokemon: Pokemon) {
         ) {
             PokemonAbilities(abilities = pokemon.abilities, backgroundColor)
         }
-        Row {
-            //            PokemonStats(stats = pokemon.stats)
-            PokemonStatsChart(stats = pokemon.stats)
+        Row(
+            modifier = Modifier
+                .background(color = Color.White)
+        ) {
+            PokemonStatsChart(stats = pokemon.stats, backgroundColor)
         }
     }
 }
