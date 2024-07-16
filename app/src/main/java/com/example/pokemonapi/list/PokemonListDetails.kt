@@ -11,10 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.pokemonapi.common.TypeRow
-import com.example.pokemonapi.datamodels.Pokemon
+import com.example.pokemonapi.details.data.internal.PokemonData
 
 @Composable
-fun PokemonListDetails(pokemon: Pokemon) {
+fun PokemonListDetails(pokemon: PokemonData) {
     Column(
         modifier = Modifier
             .fillMaxHeight()

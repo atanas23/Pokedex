@@ -10,21 +10,35 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pokemonapi.details.PokemonFullDetailsScreen
+import com.example.pokemonapi.details.PokemonRemoteAdapter
+import com.example.pokemonapi.details.PokemonRemoteDataSource
+import com.example.pokemonapi.details.PokemonRepository
+import com.example.pokemonapi.details.data.internal.PokemonData
 import com.example.pokemonapi.list.PokemonListScreen
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: PokemonViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
+            val adapter = PokemonRemoteAdapter()
+            val api = RetrofitInstance.api
+            val dataSource = PokemonRemoteDataSource(api, adapter)
+            val repository = PokemonRepository(dataSource)
+            val viewModel: PokemonViewModel = viewModel(
+                factory = PokemonViewModelFactory(repository)
+            )
+
             val pokemonDataList by viewModel.pokemonDataList.observeAsState(emptyList())
             val errorMessage by viewModel.errorMessage.observeAsState()
-            val navController = rememberNavController()
+
+            viewModel.getPokemon(1)
 
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -52,7 +66,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-        viewModel.getPokemon(1)
     }
 }

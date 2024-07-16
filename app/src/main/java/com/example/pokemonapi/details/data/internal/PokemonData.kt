@@ -1,6 +1,10 @@
-package com.example.pokemonapi.datamodels
+package com.example.pokemonapi.details.data.internal
 
-data class Pokemon(
+import com.example.pokemonapi.datamodels.PokemonAbility
+import com.example.pokemonapi.datamodels.PokemonStat
+import com.example.pokemonapi.datamodels.PokemonType
+
+data class PokemonData(
     val id: Int,
     val name: String,
     val height: Int,

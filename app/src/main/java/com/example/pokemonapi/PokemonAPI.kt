@@ -1,10 +1,7 @@
 package com.example.pokemonapi
 
 import com.example.pokemonapi.datamodels.Generation
-import com.example.pokemonapi.datamodels.Pokemon
-import com.example.pokemonapi.datamodels.PokemonAbility
-import com.example.pokemonapi.datamodels.PokemonStat
-import com.example.pokemonapi.datamodels.PokemonType
+import com.example.pokemonapi.details.data.external.PokemonDataExternal
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -15,7 +12,7 @@ interface PokemonApi {
     suspend fun getPokemonByGen(@Path("generation") numb: Int): Generation
 
     @GET("pokemon/{name}")
-    suspend fun getPokemonDetails(@Path("name") name: String): Pokemon
+    suspend fun getPokemonDetails(@Path("name") name: String): PokemonDataExternal
 }
 
 object RetrofitInstance {

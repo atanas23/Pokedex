@@ -22,11 +22,11 @@ import androidx.navigation.NavHostController
 import com.example.pokemonapi.common.PokemonID
 import com.example.pokemonapi.common.PokemonImage
 import com.example.pokemonapi.common.getBackgroundColor
-import com.example.pokemonapi.datamodels.Pokemon
+import com.example.pokemonapi.details.data.internal.PokemonData
 
 @SuppressLint("InvalidColorHexValue")
 @Composable
-fun PokemonItem(pokemon: Pokemon, navController: NavHostController) {
+fun PokemonItem(pokemon: PokemonData, navController: NavHostController) {
     val backgroundColor = getBackgroundColor(pokemon.types.firstOrNull()?.type?.name)
 
     ElevatedCard(

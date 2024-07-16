@@ -11,11 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.pokemonapi.datamodels.Pokemon
+import com.example.pokemonapi.details.data.internal.PokemonData
 
 @Composable
 fun PokemonListScreen(
-    pokemons: List<Pokemon>,
+    pokemons: List<PokemonData>,
     errorMessage: String?,
     onFetchPokemon: () -> Unit,
     navController: NavHostController
@@ -27,7 +27,7 @@ fun PokemonListScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items(pokemons) { pokemon ->
-            PokemonItem(pokemon = pokemon, navController = navController) // Pass NavController to PokemonItem
+            PokemonItem(pokemon = pokemon, navController = navController)
         }
         item {
             errorMessage?.let {
