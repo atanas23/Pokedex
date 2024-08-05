@@ -4,8 +4,8 @@ import com.example.pokemonapi.details.data.external.PokemonDataExternal
 import com.example.pokemonapi.details.data.internal.PokemonData
 import com.example.pokemonapi.details.data.internal.Sprites
 
-class PokemonRemoteAdapter {
-    fun adaptPokemonListExternalToInternal(pokemonDetails: PokemonDataExternal): PokemonData {
+class PokemonDetailsRemoteAdapter {
+    fun adaptPokemonDetailsExternalToInternal(pokemonDetails: PokemonDataExternal): PokemonData {
         return pokemonDetails.let {
             PokemonData(
                 id = it.id,

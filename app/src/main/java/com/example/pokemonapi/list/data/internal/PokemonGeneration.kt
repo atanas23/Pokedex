@@ -1,6 +1,6 @@
-package com.example.pokemonapi.datamodels
+package com.example.pokemonapi.list.data.internal
 
-data class Generation(
+data class PokemonGeneration(
     val id: Int,
     val name: String,
     val pokemon_species: List<PokemonSpecies>

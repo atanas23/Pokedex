@@ -13,7 +13,7 @@ import com.example.pokemonapi.common.PokemonImage
 import com.example.pokemonapi.common.getBackgroundColor
 import com.example.pokemonapi.details.data.internal.PokemonData
 @Composable
-fun PokemonDetailedItem(pokemon: PokemonData) {
+fun PokemonDetailedItem(pokemon: PokemonData) { //TODO delete this fun
     val backgroundColor = getBackgroundColor(pokemon.types.firstOrNull()?.type?.name)
     Column(
         modifier = Modifier

@@ -2,13 +2,13 @@ package com.example.pokemonapi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.pokemonapi.details.PokemonRepository
+import com.example.pokemonapi.details.PokemonDetailsRepository
 
-    class PokemonViewModelFactory(private val repository: PokemonRepository) : ViewModelProvider.Factory {
+class PokemonDetailsViewModelFactory(private val repository: PokemonDetailsRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PokemonViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(PokemonDetailsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return PokemonViewModel(repository) as T
+                return PokemonDetailsViewModel(repository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
